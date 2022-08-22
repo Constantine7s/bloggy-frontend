@@ -8,6 +8,7 @@ export const Header = () => {
   const isAuth = false;
 
   const onClickLogout = () => {};
+  
 
   return (
     <div className={styles.root}>
