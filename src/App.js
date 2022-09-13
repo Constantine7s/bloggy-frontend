@@ -1,20 +1,20 @@
 import Container from '@mui/material/Container';
 import { Header } from './components/Header';
-import { FullPost } from './pages/FullPost';
-import { AddPost } from './pages/AddPost';
-import { Home } from './pages/Home';
-import { Login } from './pages/Login';
-import { Registration } from './pages/Registration';
+import { Home, AddPost, FullPost, Login, Registration } from './pages';
+import { Routes, Route } from 'react-router-dom';
+
 function App() {
   return (
     <>
       <Header />
       <Container maxWidth="lg">
-        <Home />
-        <Login />
-        <Registration />
-        <AddPost />
-        <FullPost />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Registration />} />
+          <Route path="/add-post" element={<AddPost />} />
+          <Route path="/posts/:id" element={<FullPost />} />
+        </Routes>
       </Container>
     </>
   );
