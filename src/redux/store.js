@@ -1,6 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
-const store = configureStore({
-    reducer:{}
-})
+import { configureStore } from '@reduxjs/toolkit';
+import { postsReducer } from './slices/posts';
 
-export default store
+const store = configureStore({
+  reducer: { posts: postsReducer },
+});
+
+export default store;
