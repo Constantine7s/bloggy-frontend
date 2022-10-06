@@ -37,22 +37,21 @@ export const Home = () => {
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {[...Array(5)].map(() => (
-            <Post
-              id={1}
-              title="Test post"
+          {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) => (
+            isPostsLoading ? (<Post key={index} isLoading={true} />) : (
+              <Post
+              id={obj._id}
+              title={obj.title}
               imageUrl="https://herebydesign.net/wp-content/uploads/2014/11/cropped-blog.header-photo.jpg"
-              user={{
-                avatarUrl:
-                  'https://i1.rgstatic.net/ii/profile.image/1153589770760192-1652048642360_Q512/Michal-Ruprecht.jpg',
-                fullName: 'Ruprecht',
-              }}
-              createdAt={'13 September 2022 '}
-              viewsCount={150}
+              user={obj.user}
+              createdAt={obj.createdAt}
+              viewsCount={obj.viewsCount}
               commentsCount={3}
-              tags={['react', 'fun', 'typescript']}
+              tags={obj.tags}
               isEditable
             />
+            )
+            
           ))}
         </Grid>
         <Grid xs={4} item>
