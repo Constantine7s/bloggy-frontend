@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import axios from '../axios';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { fetchPosts } from '../redux/slices/posts';
+import { fetchPosts, fetchTags } from '../redux/slices/posts';
 
 export const Home = () => {
 
@@ -16,11 +16,13 @@ export const Home = () => {
   const {posts, tags} = useSelector(state => state.posts)
 
   const isPostsLoading = posts.status === 'loading';
+  const isTagsLoading = tags.status === 'loading';
 
-  console.log(posts)
+  console.log(posts, tags)
 
   React.useEffect(() => {
     dispatch(fetchPosts());
+    dispatch(fetchTags());
   },[]);
 
 
@@ -56,8 +58,8 @@ export const Home = () => {
         </Grid>
         <Grid xs={4} item>
           <TagsBlock
-            items={['react', 'typescript', 'заметки']}
-            isLoading={false}
+            items={tags.items}
+            isLoading={isTagsLoading}
           />
           <CommentsBlock
             items={[
