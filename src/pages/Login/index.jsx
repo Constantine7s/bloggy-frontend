@@ -30,10 +30,17 @@ export const Login = () => {
     return <Navigate to="/" />;
   }
 
-  const onSubmit = (val) => {
-    dispatch(fetchAuth(val));
-  };
+  const onSubmit = async (val) => {
+    const data = await dispatch(fetchAuth(val));
 
+    if (!data.payload) {
+      return alert("Couldn't login");
+    }
+
+    if ('token' in data.payload) {
+      window.localStorage.setItem('token', data.payload.token);
+    }
+  };
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
