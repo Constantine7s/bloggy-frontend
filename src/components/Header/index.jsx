@@ -15,7 +15,7 @@ export const Header = () => {
   const onClickLogout = () => {
     if (window.confirm('Are you sure you want to log out?')) {
       dispatch(logout());
-  };
+  }};
 
   return (
     <div className={styles.root}>
@@ -54,4 +54,3 @@ export const Header = () => {
     </div>
   );
 };
-}
