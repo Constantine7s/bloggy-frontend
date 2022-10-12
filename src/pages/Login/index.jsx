@@ -4,10 +4,15 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 import styles from './Login.module.scss';
+import { fetchAuth, selectIsAuth } from '../../redux/slices/auth';
 
 export const Login = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuth);
   const {
     register,
     handleSubmit,
@@ -21,8 +26,12 @@ export const Login = () => {
     mode: 'onChange',
   });
 
+  if (isAuth) {
+    return <Navigate to="/" />;
+  }
+
   const onSubmit = (val) => {
-    console.log(val);
+    dispatch(fetchAuth(val));
   };
 
   return (
@@ -45,6 +54,7 @@ export const Login = () => {
         <TextField
           className={styles.field}
           label="Password"
+          type="password"
           error={Boolean(errors.password?.message)}
           helperText={errors.password?.message}
           {...register('password', {

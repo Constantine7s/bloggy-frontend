@@ -5,10 +5,17 @@ import { Link } from 'react-router-dom';
 import styles from './Header.module.scss';
 import Container from '@mui/material/Container';
 
-export const Header = () => {
-  const isAuth = false;
+import { selectIsAuth, logout } from '../../redux/slices/auth';
+import { useSelector, useDispatch } from 'react-redux';
 
-  const onClickLogout = () => {};
+export const Header = () => {
+  const isAuth = useSelector(selectIsAuth);
+  const dispatch = useDispatch();
+
+  const onClickLogout = () => {
+    if (window.confirm('Are you sure you want to log out?')) {
+      dispatch(logout());
+  };
 
   return (
     <div className={styles.root}>
@@ -47,3 +54,4 @@ export const Header = () => {
     </div>
   );
 };
+}
