@@ -16,8 +16,7 @@ export const Login = () => {
   const {
     register,
     handleSubmit,
-    setError,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     defaultValues: {
       email: '',
@@ -32,6 +31,7 @@ export const Login = () => {
 
   const onSubmit = async (val) => {
     const data = await dispatch(fetchAuth(val));
+    console.log(data);
 
     if (!data.payload) {
       return alert("Couldn't login");
