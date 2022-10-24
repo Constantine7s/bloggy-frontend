@@ -14,6 +14,10 @@ import { Navigate } from 'react-router-dom';
 export const AddPost = () => {
   const imageUrl = '';
   const [value, setValue] = React.useState('');
+  const [title, setTitle] = React.useState('');
+  const [tags, setTags] = React.useState('');
+  const inputFileRef = React.useRef(null)
+
   const isAuth = useSelector(selectIsAuth);
 
   const handleChangeFile = () => {};
@@ -36,26 +40,30 @@ export const AddPost = () => {
         delay: 1000,
       },
     }),
-    [],
+    []
   );
 
-  if (!isAuth){
-    return <Navigate to='/' />
+  if (!isAuth) {
+    return <Navigate to="/" />;
   }
 
   return (
     <Paper style={{ padding: 30 }}>
-      <Button variant="outlined" size="large">
-        Upload preview
+      <Button onClick={() => inputFileRef.current.click()} variant="outlined" size="large">
+        Upload image
       </Button>
-      <input type="file" onChange={handleChangeFile} hidden />
+      <input ref={inputFileRef} type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
         <Button variant="contained" color="error" onClick={onClickRemoveImage}>
           Delete
         </Button>
       )}
       {imageUrl && (
-        <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+        <img
+          className={styles.image}
+          src={`http://localhost:4444${imageUrl}`}
+          alt="Uploaded"
+        />
       )}
       <br />
       <br />
@@ -63,10 +71,24 @@ export const AddPost = () => {
         classes={{ root: styles.title }}
         variant="standard"
         placeholder="Enter title..."
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         fullWidth
       />
-      <TextField classes={{ root: styles.tags }} variant="standard" placeholder="Tags" fullWidth />
-      <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
+      <TextField
+        classes={{ root: styles.tags }}
+        variant="standard"
+        placeholder="Tags"
+        value={tags}
+        onChange={(e) => setTags(e.target.value)}
+        fullWidth
+      />
+      <SimpleMDE
+        className={styles.editor}
+        value={value}
+        onChange={onChange}
+        options={options}
+      />
       <div className={styles.buttons}>
         <Button size="large" variant="contained">
           Post
