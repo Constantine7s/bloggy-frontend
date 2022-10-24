@@ -14,18 +14,16 @@ export const Home = () => {
 
   const dispatch = useDispatch();
   const {posts, tags} = useSelector(state => state.posts)
+  const userData = useSelector(state => state.auth.data)
+
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
-
-  console.log(posts, tags)
 
   React.useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
   },[]);
-
-
 
   return (
     <>
@@ -50,7 +48,7 @@ export const Home = () => {
               viewsCount={obj.views}
               commentsCount={3}
               tags={obj.tags}
-              isEditable
+              isEditable={userData?._id === obj._id}
             />
             )
             
