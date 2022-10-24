@@ -35,7 +35,7 @@ const authSlice = createSlice({
       state.data = null;
     },
     [fetchAuth.fulfilled]: (state, action) => {
-      state.auth.status = 'loaded';
+      state.status = 'loaded';
       state.data = action.payload;
     },
     [fetchAuth.rejected]: (state) => {
@@ -47,7 +47,7 @@ const authSlice = createSlice({
       state.data = null;
     },
     [fetchAuthMe.fulfilled]: (state, action) => {
-      state.auth.status = 'loaded';
+      state.status = 'loaded';
       state.data = action.payload;
     },
     [fetchAuthMe.rejected]: (state) => {
@@ -59,7 +59,7 @@ const authSlice = createSlice({
       state.data = null;
     },
     [fetchRegister.fulfilled]: (state, action) => {
-      state.auth.status = 'loaded';
+      state.status = 'loaded';
       state.data = action.payload;
     },
     [fetchRegister.rejected]: (state) => {

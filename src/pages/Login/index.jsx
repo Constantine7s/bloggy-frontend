@@ -25,14 +25,11 @@ export const Login = () => {
     mode: 'onChange',
   });
 
-  if (isAuth) {
-    return <Navigate to="/" />;
-  }
-
+  
   const onSubmit = async (val) => {
     const data = await dispatch(fetchAuth(val));
     console.log(data);
-
+    
     if (!data.payload) {
       return alert("Couldn't login");
     }
@@ -41,6 +38,11 @@ export const Login = () => {
       window.localStorage.setItem('token', data.payload.token);
     }
   };
+  
+  if (isAuth) {
+    return <Navigate to="/" />;
+  }
+  
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
