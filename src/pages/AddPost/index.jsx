@@ -10,13 +10,15 @@ import styles from './AddPost.module.scss';
 import { useSelector } from 'react-redux';
 import { selectIsAuth } from '../../redux/slices/auth';
 import { Navigate } from 'react-router-dom';
-import axios from '../../axios'
+import axios from '../../axios';
 
 export const AddPost = () => {
-  const [imageUrl, setImageUrl] = React.useState('')
+  const [imageUrl, setImageUrl] = React.useState('');
   const [value, setValue] = React.useState('');
   const [title, setTitle] = React.useState('');
   const [tags, setTags] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [text, setText] = React.useState('');
   const inputFileRef = React.useRef(null);
 
   const isAuth = useSelector(selectIsAuth);
@@ -25,21 +27,37 @@ export const AddPost = () => {
     try {
       const formData = new FormData();
       const file = event.target.files[0];
-      formData.append('image',file);
-      const {data} = await axios.post('/upload', formData)
-      setImageUrl(data.url)
-
+      formData.append('image', file);
+      const { data } = await axios.post('/upload', formData);
+      setImageUrl(data.url);
     } catch (error) {
       console.error(error);
       alert('Error uploading file');
     }
   };
 
-  const onClickRemoveImage = () => {};
+  const onClickRemoveImage = () => {
+    setImageUrl('');
+  };
 
   const onChange = React.useCallback((value) => {
     setValue(value);
   }, []);
+
+  const onSubmit = async () => {
+    try {
+      setIsLoading(true);
+      const fields = {
+        title,
+        imageUrl,
+        tags,
+        text,
+      }
+      const { data } = await axios.post('/posts', fields);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const options = React.useMemo(
     () => ({
@@ -83,7 +101,7 @@ export const AddPost = () => {
       {imageUrl && (
         <img
           className={styles.image}
-          src={`http://localhost:4444${imageUrl}`}
+          src={`http://localhost:8080/${imageUrl}`}
           alt="Uploaded"
         />
       )}
@@ -107,12 +125,12 @@ export const AddPost = () => {
       />
       <SimpleMDE
         className={styles.editor}
-        value={value}
+        value={text}
         onChange={onChange}
         options={options}
       />
       <div className={styles.buttons}>
-        <Button size="large" variant="contained">
+        <Button size="large" variant="contained" onClick={onSubmit}>
           Post
         </Button>
         <a href="/">
